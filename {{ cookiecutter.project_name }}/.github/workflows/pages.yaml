@@ -1,4 +1,3 @@
-{% raw -%}
 ---
 name: Deploy static content to Pages
 
@@ -23,22 +22,20 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: {% raw %}${{ steps.deployment.outputs.page_url }}{% endraw %}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
       - name: Install dependencies
         run: |
           pip install -r requirements_dev.txt
-{% endraw %}
       - run: pdoc ./{{ cookiecutter.project_name }} -o docs/
-{% raw %}
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
@@ -49,4 +46,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-{% endraw %}

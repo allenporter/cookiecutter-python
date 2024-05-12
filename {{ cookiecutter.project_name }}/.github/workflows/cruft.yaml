@@ -1,4 +1,3 @@
-{% raw -%}
 ---
 name: Update repository with Cruft
 permissions:
@@ -6,7 +5,11 @@ permissions:
   pull-requests: write
 on:
   schedule:
-    - cron: "0 2 * * 1" # Every Monday at 2am
+    - cron: "0 0 * * *"
+
+env:
+  PYTHON_VERSION: 3.12
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -25,11 +28,11 @@ jobs:
             commit-message: "chore: reject new Cruft update"
             title: Reject new updates detected with Cruft
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: {% raw %}${{ env.PYTHON_VERSION }}{% endraw %}
 
       - name: Install Cruft
         run: pip3 install cruft
@@ -48,7 +51,6 @@ jobs:
           fi
 
           echo "has_changes=$CHANGES" >> "$GITHUB_OUTPUT"
-{% endraw %}
 
       - name: Run update if available
         if: steps.check.outputs.has_changes == '1'
@@ -62,7 +64,7 @@ jobs:
 {% raw %}
       - name: Create pull request
         if: steps.check.outputs.has_changes == '1'
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           add-paths: ${{ matrix.add-paths }}

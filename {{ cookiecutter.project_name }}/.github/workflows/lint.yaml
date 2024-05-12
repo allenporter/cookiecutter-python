@@ -24,7 +24,13 @@ jobs:
       - uses: codespell-project/actions-codespell@v2.0
         with:
           check_hidden: false
-
+      - name: Run yamllint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: "./"
+          config_file: "./.yaml-lint.yaml"
+          strict: true
+  
       - name: Set up Python
         uses: actions/setup-python@v5
         with:

@@ -14,9 +14,9 @@ submitting.
 To prepare environment with cruft:
 
 ```bash
-$ python3 -m venv venv
-$ source venv/bin/activate
-$ pip3 install -r requirements_dev.txt
+$ uv venv
+$ source .venv/bin/activate
+$ uv pip install -r requirements_dev.txt
 ```
 
 Creating a project with the template:

@@ -42,7 +42,7 @@ jobs:
         run: |
           ruff check --output-format=github .
 
-          - name: Run Ruff Format
+      - name: Run Ruff Format
         run: |
           ruff format .
 

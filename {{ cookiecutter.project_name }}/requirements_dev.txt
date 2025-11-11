@@ -1,5 +1,4 @@
 -e .
-black==24.10.0
 coverage==7.6.8
 mypy==1.13.0
 pdoc==15.0.4

@@ -23,7 +23,7 @@ jobs:
           check_hidden: false
       - name: Validate Renovate configuration
         run: |
-          npx --package=renovate -- renovate-config-validator .github/renovate.json5
+          npx --package=renovate@38 -- renovate-config-validator .github/renovate.json5
 
       - name: Run yamllint
         uses: ibiqlik/action-yamllint@v3
